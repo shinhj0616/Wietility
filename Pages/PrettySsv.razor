@@ -1,26 +1,26 @@
-﻿@page "/prettyjson"
+﻿@page "/prettyssv"
 @using Newtonsoft.Json.Linq
 @using System.Timers
-<h1>PrettyJson!</h1>
+<h1>PrettySSV!</h1>
 
 
 <h3>Before</h3>
-<textarea class="w-100" style="height:300px" @onkeyup="@HandleKeyUp" @bind="BeforeJson" @bind:event="oninput" ></textarea>
+<textarea class="w-100" style="height:300px" @onkeyup="@HandleKeyUp" @bind="BeforeSsv" @bind:event="oninput" ></textarea>
 
 
 <p>@Msg</p>
 
 
 <h3>After</h3>
-<textarea class="w-100" style="height:300px" @bind="AfterJson" readonly></textarea>
+<textarea class="w-100" style="height:300px" @bind="AfterSsv" readonly></textarea>
 
 
 
 @code {
 
-    private string BeforeJson { get; set; }
+    private string BeforeSsv { get; set; }
 
-    private string AfterJson { get; set; }
+    private string AfterSsv { get; set; }
 
     private string Msg { get; set; }
 
@@ -35,7 +35,7 @@
 
     void HandleKeyUp(KeyboardEventArgs e)
     {
-        
+
         aTimer.Stop();
         aTimer.Start();
     }
@@ -47,12 +47,12 @@
             Msg = string.Empty;
             try
             {
-                var jObj = JObject.Parse(BeforeJson);
-                AfterJson = jObj.ToString();
+                var text = BeforeSsv.Replace("", "\r\n").Replace("", "\t");
+                AfterSsv = text;
             }
             catch(Exception)
             {
-                Msg = "올바른 JSON을 넣어주세요";
+                Msg = "올바른 SSV를 넣어주세요";
             }
             StateHasChanged();
         });
