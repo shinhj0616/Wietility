@@ -1,13 +1,10 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.JSInterop;
+using Wietility.Module;
 
 namespace Wietility
 {
@@ -19,7 +16,7 @@ namespace Wietility
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            
+            builder.Services.AddTransient(sp => new BlazorJsModule(sp.GetService<IJSRuntime>()));
             await builder.Build().RunAsync();
         }
     }
