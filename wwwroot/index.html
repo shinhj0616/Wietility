@@ -110,6 +110,17 @@
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
+
+            $('#sidebarCollapseMob').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
+            $('#content').on('touchstart', function () {
+                if (Boolean($('#sidebar').attr('class'))) {
+                    $('#sidebar').toggleClass('active');
+                }
+            })
+
         }
     </script>
 
