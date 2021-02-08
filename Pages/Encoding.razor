@@ -9,7 +9,7 @@
 @using Wietility.Module
 @inject BlazorJsModule BlazorJsModule
 @using System.Timers
-<h1>PrettySSV!</h1>
+<h1>Encoding String!</h1>
 
 <h3>Before</h3>
 <textarea class="w-100 form-control rounded-0" style="height:300px" @bind="BeforeString"></textarea>
@@ -37,8 +37,6 @@
             try
             {
                 var text = BeforeString;
-
-                Console.WriteLine(BeforeString); 
 
                 byte[] key, iv;
                 byte[] salt = new byte[8];
