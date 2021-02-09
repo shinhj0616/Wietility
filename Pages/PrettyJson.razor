@@ -2,6 +2,7 @@
 
 @using Wietility.Module
 @inject BlazorJsModule BlazorJsModule
+@using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using System.Timers
 <h1>PrettyJson!</h1>
@@ -47,7 +48,8 @@
             Msg = string.Empty;
             try
             {
-                var jObj = JObject.Parse(BeforeJson);
+                var jObj = JsonConvert.DeserializeObject(BeforeJson);
+                //var jObj = JObject.Parse(BeforeJson);
                 AfterJson = jObj.ToString();
             }
             catch (Exception)
