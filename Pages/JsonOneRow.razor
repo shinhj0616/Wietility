@@ -1,0 +1,62 @@
+﻿@page "/jsononerow"
+@using Newtonsoft.Json.Linq
+
+@using Wietility.Module
+@inject BlazorJsModule BlazorJsModule
+@using System.Timers
+@using System.Text.RegularExpressions
+<h1>JSON To One Row!</h1>
+
+<h3>Before</h3>
+<textarea class="w-100 form-control rounded-0" style="height:300px" @onkeyup="@HandleKeyUp" @bind="BeforeJson" @bind:event="oninput"></textarea>
+
+<p>@Msg</p>
+
+<h3>After</h3>
+<textarea class="w-100 form-control rounded-0" style="height:300px" @bind="AfterJson" readonly></textarea>
+
+
+
+@code {
+
+    private string BeforeJson { get; set; }
+
+    private string AfterJson { get; set; }
+
+    private string Msg { get; set; }
+
+    private System.Timers.Timer aTimer;
+
+    protected override void OnInitialized()
+    {
+        aTimer = new System.Timers.Timer(500);
+        aTimer.Elapsed += OnUserFinish;
+        aTimer.AutoReset = false;
+    }
+
+    void HandleKeyUp(KeyboardEventArgs e)
+    {
+
+        aTimer.Stop();
+        aTimer.Start();
+    }
+    
+    private void OnUserFinish(Object source, ElapsedEventArgs e)
+    {
+        InvokeAsync(() =>
+        {
+            Msg = string.Empty;
+            try
+            {
+                var text = Regex.Replace(Regex.Replace(Regex.Replace(BeforeJson, @"\\", @"\\"), @"[\r\n]+", @"\r\n"), "\"", "\\\"\"");
+                AfterJson = text;
+            }
+            catch (Exception)
+            {
+                Msg = "올바른 Json을 넣어주세요";
+            }
+            StateHasChanged();
+        });
+    }
+
+}
